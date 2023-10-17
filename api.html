@@ -12,19 +12,23 @@
         <source src="pexels-tima-miroshnichenko-5651779 (2160p).mp4" type="video/mp4">
       </video>
       <div id="header"> 
-        <a class="h" href="api.html">Know The Meaning</a>
-        <a class="h" href="">About</a>
-        <a class="h" href="">Download </a>
-        <a class="h" href="">Contact</a>
+        <a class="h" href="api.html" >Let's Know</a>
+        <a class="h" href="about.html" target="_blank">About</a>
+        <a class="h" id="down" href="">Download </a>
+        <a class="h" href="contact.html" target="_blank">Contact</a>
       </div>
       <div id="main">
-        <h1>Fasten Your Vocabulary</h1>
+        <h1 class="mm"></h1>
         <p>Open up the Dictionary</p>
       </div>
+      <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+    <script>
+        var typed = new Typed(".mm",{strings: ["Fasten Your Vocabulary"], typeSpeed:150,backspeed:150,loop:true})
+    </script>
       <form id="form">
         <input type="text" name="word" id="box" placeholder="Word" required />
         <button class="search" type="button" id="search">Search </button>
-        <p id="ans"></p>
+        <p  id="ans"></p>
       </form>
 </body>
 </html>
