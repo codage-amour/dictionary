@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', function() {
         const word = document.getElementById('box').value;
         fetchData(word);
     });
-    
+
     async function fetchData(box) {
         const url = `https://api.api-ninjas.com/v1/thesaurus?word=${box}`;
         const options = {
@@ -12,20 +12,70 @@ document.addEventListener('DOMContentLoaded', function() {
 
         try {
             const response = await fetch(url, options);
-            const result = await response.text();
-			const h=document.getElementById('ans');
-            h.innerHTML = result;
-			h.classList.add('hh'); 
-			const downloadLink = document.getElementById('down');
-            downloadLink.href = `data:text/plain;charset=utf-8,${encodeURIComponent(result)}`;
-            downloadLink.download = 'downloaded_data.txt';
-			const downLink = document.getElementById('down');
-            downLink.addEventListener('click', function() {
-                downloadLink.click();});
+            const result = await response.json();
+            const h = document.getElementById('ans');
+
+            
+            const contentBlock = document.createElement('div');
+            contentBlock.classList.add('hh'); 
+
+            const searchedWordElement = document.createElement('strong');
+            searchedWordElement.textContent = `Searched Word: ${box}`;
+            contentBlock.appendChild(searchedWordElement);
+            contentBlock.appendChild(document.createElement('br'));
+
+            
+            const displayedSynonyms = document.createElement('div');
+            displayedSynonyms.textContent = result.synonyms.slice(0, 5).join(', ');
+            contentBlock.appendChild(displayedSynonyms);
+
+            
+            const remainingSynonyms = result.synonyms.slice(5);
+
+           
+            const readMoreLink = document.createElement('a');
+            readMoreLink.href = '#';
+            readMoreLink.textContent = 'Read More';
+            contentBlock.appendChild(document.createElement('br'));
+            contentBlock.appendChild(readMoreLink);
+
+            
+            readMoreLink.addEventListener('click', function() {
+                const moreSynonyms = remainingSynonyms.slice(0, 5).join(', ');
+                displayedSynonyms.textContent += moreSynonyms;
+                remainingSynonyms.splice(0, 5);
+
+                if (remainingSynonyms.length === 0) {
+                    readMoreLink.style.display = 'none'; 
+                }
+            });
+
+            h.innerHTML = '';
+            h.appendChild(contentBlock);
         } catch (error) {
             console.error(error);
         }
     }
+    document.getElementById('box').value = '';
+
 });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
